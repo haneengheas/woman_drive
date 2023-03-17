@@ -1,0 +1,13 @@
+const String logo = 'assets/images/logo.png';
+const String female = 'assets/images/female.png';
+const String male = 'assets/images/male.png';
+const String woman1 = 'assets/images/woman.png';
+const String woman2 = 'assets/images/woman2.png';
+const String woman3 = 'assets/images/woman3.png';
+const String car = 'assets/images/car.png';
+const String list = 'assets/images/checklist.png';
+const String money = 'assets/images/money (4).png';
+const String email = 'assets/images/gmail.png';
+const String clock = 'assets/images/clock.png';
+const String timeTable = 'assets/images/timetable.png';
+const String admin = 'assets/images/admin.png';
