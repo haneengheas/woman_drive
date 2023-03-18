@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 import '../../../shared/components/components.dart';
@@ -20,6 +21,7 @@ class _TrainerHomeScreenState extends State<TrainerHomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+
         body: SingleChildScrollView(
           child: Column(
             children: [

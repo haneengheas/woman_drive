@@ -6,7 +6,6 @@ import '../../../shared/components/constants.dart';
 import '../../../shared/components/navigator.dart';
 import '../../../shared/styles/colors.dart';
 import '../bills/view.dart';
-import '../comment_suggestion/comment_info/view.dart';
 import '../comment_suggestion/view.dart';
 import '../new_trainer/view.dart';
 
@@ -21,13 +20,28 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title:  const Text(
+          'مرحبا بك ',
+        ),
+        leading: const Text(''),
+        actions: [
+
+          IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(
+                Icons.logout,
+                size: 30,
+              )),
+        ],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
-                height: 20,
-              ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
               // الصورة الشخصية + الاسم
               ProfileImage(
                 name: 'المشرف',
@@ -40,7 +54,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 height: 5,
               ),
               SizedBox(
-                height: height(context, 5),
+                height: height(context, 10),
               ),
               ButtonTemplate(
                 color: AppColors.pink,

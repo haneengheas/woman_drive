@@ -28,52 +28,57 @@ class _CommentListScreenState extends State<CommentListScreen> {
               )),
         ),
         body: ListView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-          itemCount: 3,
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+          itemCount: 4,
           itemBuilder: (BuildContext context, int index) {
             return Directionality(
               textDirection: TextDirection.rtl,
-              child: InkWell(
-                onTap: () => navigateTo(context, const AdminCommentScreen()),
-                child: Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: AppColors.darkPink,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(color: AppColors.darkPink),
+              child: Container(
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 10, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: AppColors.darkPink,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: AppColors.darkPink),
+                  ),
+                  child: ListTile(
+                    onTap: () {
+                      navigateTo(context, const AdminCommentScreen());
+                    },
+                    subtitle: const Text('20-11-2022'),
+                    leading: const CircleAvatar(
+                      backgroundImage: AssetImage(female),
+                      radius: 30,
                     ),
-                    child: ListTile(
-                      onTap: () {},
-                      subtitle: const Text('20-11-2022'),
-                      leading: const CircleAvatar(
-                        backgroundImage: AssetImage(female),
-                        radius: 30,
-                      ),
-                      title: Text(
-                        'منال',
-                        style: AppTextStyles.name,
-                      ),
-                      
-                      trailing:Column(
-                        children: [
-                          const CircleAvatar(
-                            backgroundImage: AssetImage('assets/images/messages.png'),
-                            radius: 20,
-                          ),
-                          //Image(image: AssetImage('assets/images/messages.png'),height: 20,),
-                          Text(
-                            'تم الرد',
-                            style: AppTextStyles.name.apply(color: AppColors.darkGreen),
-
-
-                          ),
-                        ],
-                      ),
-                    )),
-              ),
+                    title: Text(
+                      'منال',
+                      style: AppTextStyles.name,
+                    ),
+                    trailing: Column(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: AppColors.darkPink,
+                          radius: 20,
+                          child: index.isEven
+                              ? const Image(
+                                  image: AssetImage(
+                                      closedMessage),
+                                  height: 30,
+                                  width: 30,
+                                )
+                              : const Image(
+                                  image: AssetImage(
+                                      openMessage),
+                                  height: 30,
+                                  width: 30,
+                                ),
+                        ),
+                        //Image(image: AssetImage('assets/images/messages.png'),height: 20,),
+                      ],
+                    ),
+                  )),
             );
           },
         ));

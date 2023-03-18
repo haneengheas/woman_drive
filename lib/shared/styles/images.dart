@@ -11,3 +11,5 @@ const String email = 'assets/images/gmail.png';
 const String clock = 'assets/images/clock.png';
 const String timeTable = 'assets/images/timetable.png';
 const String admin = 'assets/images/admin.png';
+const String openMessage = 'assets/images/open-email.png';
+const String closedMessage = 'assets/images/messages.png';

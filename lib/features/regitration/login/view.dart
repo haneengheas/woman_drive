@@ -83,9 +83,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   text1: 'تسجيل الدخول',
                 ),
               ),
-              const SizedBox(
-                height: 30,
-              ),
+          const SizedBox(
+            height: 50,
+          ),
               // انشاء حساب تسجيل دخول جديد
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

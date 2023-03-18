@@ -29,6 +29,7 @@ class _TrainerReservationScreenState extends State<TrainerReservationScreen> {
             )),
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
             // عدد المقبولين و الانتهاء
