@@ -29,6 +29,14 @@ class _DriverProfileState extends State<DriverProfile> {
               icon: const Icon(
                 Icons.arrow_back_ios_outlined,
               )),
+          actions: [
+            IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(
+                  Icons.logout,
+                  size: 30,
+                )),
+          ],
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -28,6 +28,8 @@ class _CommentScreenState extends State<CommentScreen> {
               )),
         ),
         body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+
           child: Column(
             children: [
               // الصورة + الاسم

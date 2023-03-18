@@ -35,6 +35,8 @@ class _ReservationScreenState extends State<ReservationScreen> {
               )),
         ),
         body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+
           child: Column(
             children: [
               const SizedBox(height: 10,),

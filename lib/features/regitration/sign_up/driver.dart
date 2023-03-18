@@ -32,6 +32,7 @@ class _DriverScreenState extends State<DriverScreen> {
         body: Directionality(
             textDirection: TextDirection.rtl,
             child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
               child: Column(
                 children: [
                   const SizedBox(

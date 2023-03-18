@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:woman_drive/features/driver/home/view.dart';
 import 'package:woman_drive/features/driver/reservation_list/widget/rate_comment_card.dart';
-import 'package:woman_drive/features/trainer/resservation_info/view.dart';
 import 'package:woman_drive/shared/components/navigator.dart';
 import 'package:woman_drive/shared/styles/colors.dart';
 import 'package:woman_drive/shared/styles/images.dart';
-
 import '../../../shared/styles/styles.dart';
 import '../../admin/bills_details/reservation_bills_details/view.dart';
 
@@ -45,7 +43,7 @@ class _ReservationListScreenState extends State<ReservationListScreen> {
                 textDirection: TextDirection.rtl,
                 child: ListTile(
                   onTap: (){
-                    index.isEven? rating(context): navigateTo(context, ReservationBillDetails());
+                    index.isEven? rating(context): navigateTo(context, const ReservationBillDetails());
                   },
                   tileColor: AppColors.darkPink,
                   shape: RoundedRectangleBorder(

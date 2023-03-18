@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:woman_drive/features/trainer/home/view.dart';
 import 'package:woman_drive/shared/components/navigator.dart';
@@ -33,6 +35,7 @@ class _DrivingInstructorScreenState extends State<DrivingInstructorScreen> {
         body: Directionality(
             textDirection: TextDirection.rtl,
             child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
               child: Column(
                 children: [
                   const SizedBox(

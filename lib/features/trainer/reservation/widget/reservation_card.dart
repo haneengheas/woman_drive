@@ -83,7 +83,7 @@ class ReservationCard extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  'finished',
+                  'منتهي',
                   style: AppTextStyles.name,
                 )
               ],

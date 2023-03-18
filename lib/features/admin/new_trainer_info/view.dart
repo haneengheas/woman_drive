@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-
 import '../../../shared/components/components.dart';
 import '../../../shared/components/constants.dart';
 import '../../../shared/styles/colors.dart';
-import '../../../shared/styles/images.dart';
 import '../../../shared/styles/styles.dart';
-
 class NewTrainerInfoScreen extends StatefulWidget {
   const NewTrainerInfoScreen({Key? key}) : super(key: key);
 
@@ -31,6 +28,8 @@ class _NewTrainerInfoScreenState extends State<NewTrainerInfoScreen> {
             )),
       ),
       body: SingleChildScrollView(
+       // padding: const EdgeInsets.symmetric(horizontal: 10),
+
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
 
