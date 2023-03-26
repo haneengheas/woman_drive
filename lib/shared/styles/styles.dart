@@ -22,6 +22,9 @@ abstract class AppTextStyles {
   static TextStyle w400s =
       GoogleFonts.tajawal(fontWeight: FontWeight.w400, fontSize: 14);
 
+  static TextStyle w400b =
+      GoogleFonts.tajawal(fontWeight: FontWeight.bold, fontSize: 14);
+
   /// - weight: w500
   /// - family: cairo
   static TextStyle smTitles =

@@ -36,6 +36,22 @@ dependencies:
   google_fonts:
   flutter_rating_bar:
   table_calendar:
+  fluttertoast:
+  flutter_conditional_rendering:
+  conditional_builder_null_safety:
+  awesome_dialog:
+  image_picker:
+  url_launcher:
+  intl:
+
+
+
+  # fire base
+  firebase_core:
+  firebase_auth:
+  cloud_firestore:
+  firebase_storage:
+
 
 
 

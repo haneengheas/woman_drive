@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:woman_drive/features/admin/bills_details/reservation_bills_details/view.dart';
-import '../../../shared/components/navigator.dart';
 import '../../../shared/styles/colors.dart';
 import '../../../shared/styles/images.dart';
 import '../../../shared/styles/styles.dart';
@@ -30,7 +28,7 @@ class _BillsDetailsScreenState extends State<BillsDetailsScreen> {
         itemCount: 3,
         itemBuilder: (context, index) {
           return InkWell(
-            onTap: () => navigateTo(context, const ReservationBillDetails()),
+            // onTap: () => {navigateTo(context, const ReservationBillDetails())},
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),

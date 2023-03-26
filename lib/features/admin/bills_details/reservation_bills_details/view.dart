@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:woman_drive/models/driver_reservation_model.dart';
 
 import '../../../../shared/components/components.dart';
 import '../../../../shared/styles/colors.dart';
@@ -6,7 +7,10 @@ import '../../../../shared/styles/images.dart';
 import '../../../../shared/styles/styles.dart';
 
 class ReservationBillDetails extends StatefulWidget {
-  const ReservationBillDetails({Key? key}) : super(key: key);
+  final DriverReservationModel? model;
+
+   const ReservationBillDetails({required this.model, Key? key})
+      : super(key: key);
 
   @override
   State<ReservationBillDetails> createState() => _ReservationBillDetailsState();
@@ -37,7 +41,7 @@ class _ReservationBillDetailsState extends State<ReservationBillDetails> {
                 ProfileImage(
                   onTap: () {},
                   image: female,
-                  name: 'ريماس محمد',
+                  name: widget.model!.trainerName,
                   role: 'سائق',
                 ),
                 const SizedBox(
@@ -62,7 +66,7 @@ class _ReservationBillDetailsState extends State<ReservationBillDetails> {
                       width: 30,
                     ),
                     Header(
-                      text: '  المدة: ساعتان',
+                      text: 'المدة : ' '${widget.model!.numHours}' ' ساعة ',
                       style: AppTextStyles.w400.apply(
                         color: AppColors.greyDark,
                       ),
@@ -85,7 +89,10 @@ class _ReservationBillDetailsState extends State<ReservationBillDetails> {
                       width: 10,
                     ),
                     Text(
-                      '  PM التاريخ : 10/4/2023 - 8:00 ',
+                      '${widget.model!.dayDate}'
+                          '  '
+                          '${widget.model!.hours}'
+                          ' : التاريخ  ',
                       style: AppTextStyles.w400.apply(
                         color: AppColors.greyDark,
                       ),
@@ -120,7 +127,7 @@ class _ReservationBillDetailsState extends State<ReservationBillDetails> {
                       style: AppTextStyles.smTitles,
                     ),
                     Text(
-                      'SR 100  ',
+                      '${widget.model!.total}' ' SR ',
                       style: AppTextStyles.smTitles,
                     ),
                   ],
@@ -156,7 +163,7 @@ class _ReservationBillDetailsState extends State<ReservationBillDetails> {
                       style: AppTextStyles.smTitles,
                     ),
                     Text(
-                      'SR 115  ',
+                      '${(widget.model!.total! + 15)} SR',
                       style: AppTextStyles.smTitles,
                     ),
                   ],

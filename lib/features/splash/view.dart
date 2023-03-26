@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:woman_drive/features/regitration/login/view.dart';
+import 'package:woman_drive/features/registration/login/view.dart';
 import 'package:woman_drive/shared/components/navigator.dart';
 
 import '../../shared/components/constants.dart';

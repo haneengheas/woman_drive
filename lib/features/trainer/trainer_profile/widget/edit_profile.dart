@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:woman_drive/models/trainer_model.dart';
 
 import '../../../../shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
 import '../../../../shared/styles/styles.dart';
+import '../../cubit/trainer_cubit.dart';
 
 Future editTrainerProfile(
   BuildContext context,
+  TrainerModel model,
 ) {
+  final nameController = TextEditingController(text: model.name);
+  final emailController = TextEditingController(text: model.email);
+  final idController = TextEditingController(text: model.id);
+  final ageController = TextEditingController(text: model.age);
+  final phoneController = TextEditingController(text: model.phone);
+  final addressController = TextEditingController(text: model.address);
+  final carTypeController = TextEditingController(text: model.carType);
+  final licenseNumberController =
+      TextEditingController(text: model.licenseNumber);
+
   return showDialog(
       context: context,
       builder: (context) {
@@ -30,39 +43,35 @@ Future editTrainerProfile(
                 children: [
                   TextFieldTemplate(
                     hintText: 'الاسم',
+                    controller: nameController,
                   ),
                   TextFieldTemplate(
                     hintText: 'البريد الالكتروني',
-                  ),
-                  TextFieldTemplate(
-                    hintText: 'كلمة المرور',
+                    controller: emailController,
                   ),
                   TextFieldTemplate(
                     hintText: 'رقم الهوية ',
+                    controller: idController,
                   ),
                   TextFieldTemplate(
                     hintText: 'رقم الهاتف',
+                    controller: phoneController,
                   ),
                   TextFieldTemplate(
                     hintText: 'العمر',
+                    controller: ageController,
                   ),
                   TextFieldTemplate(
                     hintText: 'العنوان',
+                    controller: addressController,
                   ),
                   TextFieldTemplate(
                     hintText: 'رقم الرخصة',
+                    controller: licenseNumberController,
                   ),
                   TextFieldTemplate(
                     hintText: 'نوع السيارة',
-                  ),
-                  TextFieldTemplate(
-                    hintText: 'رقم اللوحة',
-                  ),
-                  TextFieldTemplate(
-                    hintText: 'عمر المتدربين',
-                  ),
-                  TextFieldTemplate(
-                    hintText: 'السعر',
+                    controller: carTypeController,
                   ),
                 ],
               ),
@@ -76,7 +85,18 @@ Future editTrainerProfile(
                   width: width(context, 3),
                   color: AppColors.yellow,
                   height: 40,
-                  onPressed: () {},
+                  onPressed: () {
+                    TrainerCubit.get(context).updateProfile(
+                        name: nameController.text,
+                        email: emailController.text,
+                        id: idController.text,
+                        phone: phoneController.text,
+                        age: ageController.text,
+                        address: addressController.text,
+                        licenseNumber: licenseNumberController.text,
+                        carType: carTypeController.text);
+                    Navigator.pop(context);
+                  },
                   text: 'تأكيد',
                   textStyle: AppTextStyles.brButton,
                 ),
@@ -84,7 +104,9 @@ Future editTrainerProfile(
                   width: width(context, 3),
                   color: AppColors.pink,
                   height: 40,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   text: 'الغاء',
                   textStyle: AppTextStyles.brButton,
                 ),

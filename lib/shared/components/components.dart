@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import '../styles/colors.dart';
 import '../styles/styles.dart';
 
@@ -39,12 +39,12 @@ class ButtonTemplate extends StatelessWidget {
                 text: "",
                 style: TextStyle(color: Colors.white, fontSize: fontSize),
                 children: [
-                  TextSpan(text: text1, style: AppTextStyles.button),
-                  TextSpan(text: text2),
-                  TextSpan(
-                      text: text3,
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
-                ])),
+              TextSpan(text: text1, style: AppTextStyles.button),
+              TextSpan(text: text2),
+              TextSpan(
+                  text: text3,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+            ])),
       ),
     );
   }
@@ -58,13 +58,14 @@ class CustomButtonTemplate extends StatelessWidget {
   Color? color;
   TextStyle? textStyle;
 
-  CustomButtonTemplate({this.height,
-    this.width,
-    this.text,
-    this.color,
-    this.onPressed,
-    this.textStyle,
-    Key? key})
+  CustomButtonTemplate(
+      {this.height,
+      this.width,
+      this.text,
+      this.color,
+      this.onPressed,
+      this.textStyle,
+      Key? key})
       : super(key: key);
 
   @override
@@ -77,7 +78,7 @@ class CustomButtonTemplate extends StatelessWidget {
           onPressed: onPressed,
           color: color,
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: Text(
             text!,
             style: textStyle,
@@ -87,13 +88,16 @@ class CustomButtonTemplate extends StatelessWidget {
 }
 
 class TextFieldTemplate extends StatelessWidget {
-  TextFieldTemplate({Key? key,
-    required this.hintText,
-    this.controller,
-    this.obscureText = false,
-    this.validator,
-    this.icon,
-    this.lines})
+  TextFieldTemplate(
+      {Key? key,
+      required this.hintText,
+      this.controller,
+      this.obscureText = false,
+      this.readOnly = false,
+      this.validator,
+      this.icon,
+      this.keyType,
+      this.lines})
       : super(key: key);
 
   String hintText;
@@ -102,6 +106,8 @@ class TextFieldTemplate extends StatelessWidget {
   Function? validator;
   IconData? icon;
   int? lines;
+  TextInputType? keyType;
+  bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -114,6 +120,8 @@ class TextFieldTemplate extends StatelessWidget {
           maxLines: lines,
           controller: controller,
           validator: (value) => validator!(value),
+          keyboardType: keyType,
+          readOnly: readOnly,
           decoration: InputDecoration(
               hintText: hintText,
               border: InputBorder.none,
@@ -125,7 +133,7 @@ class TextFieldTemplate extends StatelessWidget {
               ),
               labelStyle: const TextStyle(color: AppColors.grey, fontSize: 15),
               hintStyle:
-              const TextStyle(color: AppColors.greyDark, fontSize: 15),
+                  const TextStyle(color: AppColors.greyDark, fontSize: 15),
               enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.black, width: 1),
                   borderRadius: BorderRadius.all(Radius.circular(15))),
@@ -144,156 +152,6 @@ class TextFieldTemplate extends StatelessWidget {
   }
 }
 
-class BottomText extends StatelessWidget {
-  const BottomText({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      child: RichText(
-          textAlign: TextAlign.center,
-          text: const TextSpan(
-              text: "",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-              ),
-              children: [
-                TextSpan(
-                    text: "FCIS - ",
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: "Facult of comuters \n and informatoin science"),
-              ])),
-    );
-  }
-}
-
-void showMyDialog(String message, BuildContext context) async {
-  return await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          //  backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          contentPadding: EdgeInsets.zero,
-          title: const Text("Error"),
-          content: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(message),
-          ),
-          actions: [
-            Center(
-              child: TextButton(
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                          ))),
-                  onPressed: () {
-                    Navigator.pop(context, "ok");
-                  },
-                  child: const Text(
-                    "ok",
-                    style:
-                    TextStyle(color: AppColors.primarycolor, fontSize: 22),
-                  )),
-            )
-          ],
-        );
-      });
-}
-
-///
-
-class NavigateToOption extends StatelessWidget {
-  NavigateToOption({Key? key, required this.name, required this.onPressed})
-      : super(key: key);
-  String name;
-  void Function()? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: SizedBox(
-        height: 70,
-        width: 320,
-        child: Material(
-          color: AppColors.pink,
-          borderRadius: BorderRadius.circular(20),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-            ),
-            child: Row(
-              children: [
-                Text(name,
-                    style: const TextStyle(
-                        fontSize: 30, fontWeight: FontWeight.bold)),
-                const Spacer(),
-                SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: MaterialButton(
-                      padding: EdgeInsets.zero,
-                      color: AppColors.primarycolor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      onPressed: onPressed,
-                      child: const Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
-                      )),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class TeamsName extends StatelessWidget {
-  TeamsName({Key? key, required this.name, required this.onPressed})
-      : super(key: key);
-  String name;
-
-  void Function()? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: SizedBox(
-        height: 100,
-        width: 1,
-        child: MaterialButton(
-            padding: const EdgeInsets.all(10),
-            color: AppColors.grey,
-            shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            onPressed: onPressed,
-            child: RichText(
-              text: TextSpan(
-                text: 'Team ',
-                style: AppTextStyles.w300.apply(
-                  color: Colors.black,
-                ),
-                children: <TextSpan>[
-                  TextSpan(text: name, style: AppTextStyles.lrTitles),
-                ],
-              ),
-            )),
-      ),
-    );
-  }
-}
-
 class Header extends StatelessWidget {
   final String? text;
   TextStyle? style;
@@ -306,7 +164,12 @@ class Header extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         child: Align(
           alignment: Alignment.centerRight,
-          child: Text(text!, style: style),
+          child: Text(
+            text!,
+            style: style,
+            maxLines: 2,
+            textDirection: TextDirection.rtl,
+          ),
         ));
   }
 }
@@ -317,9 +180,16 @@ class Box extends StatelessWidget {
   String? text;
   TextStyle? style;
   Color? color;
-  AlignmentGeometry ? dirction;
+  AlignmentGeometry? dirction;
 
-  Box({this.color, this.style, this.width, this.height, this.text, this.dirction, Key? key})
+  Box(
+      {this.color,
+      this.style,
+      this.width,
+      this.height,
+      this.text,
+      this.dirction,
+      Key? key})
       : super(key: key);
 
   @override
@@ -333,7 +203,6 @@ class Box extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: color,
-
       ),
       child: Text(
         textDirection: TextDirection.rtl,
@@ -344,24 +213,21 @@ class Box extends StatelessWidget {
   }
 }
 
-
 class ProfileImage extends StatelessWidget {
-  String ? name;
+  String? name;
 
-  String ? role;
-  String ?image;
+  String? role;
+  String? image;
 
   void Function()? onTap;
 
-
-   ProfileImage({ this.name, this.image, this.onTap, this.role, Key? key})
+  ProfileImage({this.name, this.image, this.onTap, this.role, Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-      const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -388,7 +254,8 @@ class ProfileImage extends StatelessWidget {
           ),
           InkWell(
             onTap: onTap,
-            child:  CircleAvatar(
+            child: CircleAvatar(
+              backgroundColor: AppColors.primarycolor,
               backgroundImage: AssetImage(image!),
               radius: 40,
             ),
@@ -397,4 +264,36 @@ class ProfileImage extends StatelessWidget {
       ),
     );
   }
+}
+
+showToast({
+  required String text,
+  required ToastStates state,
+}) =>
+    Fluttertoast.showToast(
+        msg: text,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 5,
+        backgroundColor: chooseToastColor(state),
+        textColor: Colors.white,
+        fontSize: 16.0);
+
+//enum (if there many choices)
+enum ToastStates { success, error, warning }
+
+Color? chooseToastColor(ToastStates state) {
+  Color color;
+  switch (state) {
+    case ToastStates.success:
+      color = Colors.green;
+      break;
+    case ToastStates.error:
+      color = Colors.red;
+      break;
+    case ToastStates.warning:
+      color = Colors.amber;
+      break;
+  }
+  return color;
 }

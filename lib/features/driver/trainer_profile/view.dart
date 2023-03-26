@@ -1,6 +1,10 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:woman_drive/models/trainer_model.dart';
 import 'package:woman_drive/shared/components/components.dart';
 import 'package:woman_drive/shared/components/constants.dart';
 import 'package:woman_drive/shared/components/navigator.dart';
@@ -11,7 +15,11 @@ import '../../../shared/styles/styles.dart';
 import '../reservation/view.dart';
 
 class TrainerProfileScreen extends StatefulWidget {
-  const TrainerProfileScreen({Key? key}) : super(key: key);
+  TrainerModel model;
+  String image;
+
+  TrainerProfileScreen({required this.model, required this.image, Key? key})
+      : super(key: key);
 
   @override
   State<TrainerProfileScreen> createState() => _TrainerProfileScreenState();
@@ -42,9 +50,9 @@ class _TrainerProfileScreenState extends State<TrainerProfileScreen> {
               children: [
                 // صورة البروفايل + الاسم
                 ProfileImage(
-                  name: 'ويجدان',
+                  name: widget.model.name,
                   role: 'مدرب قيادة',
-                  image: female,
+                  image: widget.image,
                   onTap: () {},
                 ),
                 const SizedBox(
@@ -52,7 +60,7 @@ class _TrainerProfileScreenState extends State<TrainerProfileScreen> {
                 ),
                 // السعر+ نوع السيارة
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: Column(
                     children: [
                       Row(
@@ -67,7 +75,7 @@ class _TrainerProfileScreenState extends State<TrainerProfileScreen> {
                             width: 10,
                           ),
                           Text(
-                            '100 RS',
+                            '${widget.model.price}' ' RS',
                             style: AppTextStyles.w400.apply(
                               color: AppColors.greyDark,
                             ),
@@ -84,7 +92,7 @@ class _TrainerProfileScreenState extends State<TrainerProfileScreen> {
                             width: 10,
                           ),
                           Text(
-                            'نوع السيارة : كيا ',
+                            '${widget.model.carType}' ' : نوع السيارة ',
                             style: AppTextStyles.w400.apply(
                               color: AppColors.greyDark,
                             ),
@@ -107,7 +115,9 @@ class _TrainerProfileScreenState extends State<TrainerProfileScreen> {
                             width: 10,
                           ),
                           Text(
-                            'اقبل تدريب لمن تزيد اعمارهم عن 18 سنة',
+                            'اقبل تدريب لمن تزيد اعمارهم عن  '
+                            '${widget.model.ageDriver}'
+                            ' سنة ',
                             style: AppTextStyles.w400.apply(
                               color: AppColors.greyDark,
                             ),
@@ -130,7 +140,7 @@ class _TrainerProfileScreenState extends State<TrainerProfileScreen> {
                             width: 10,
                           ),
                           Text(
-                            'Mona@gmail.com',
+                            '${widget.model.email}',
                             style: AppTextStyles.w400.apply(
                               color: AppColors.greyDark,
                             ),
@@ -148,7 +158,9 @@ class _TrainerProfileScreenState extends State<TrainerProfileScreen> {
                       color: AppColors.yellow,
                       height: 35,
                       width: width(context, 3),
-                      onPressed: () {},
+                      onPressed: () {
+                        launchUrl(Uri.parse(widget.model.licenseImage!));
+                      },
                       text: 'عرض الرخصة',
                       textStyle: AppTextStyles.brButton,
                     ),
@@ -156,8 +168,11 @@ class _TrainerProfileScreenState extends State<TrainerProfileScreen> {
                       color: AppColors.pink,
                       height: 35,
                       width: width(context, 3),
-                      onPressed: () =>
-                          navigateTo(context, const ReservationScreen()),
+                      onPressed: () => navigateTo(
+                          context,
+                          ReservationScreen(
+                            model: widget.model,
+                          )),
                       text: 'حجز',
                       textStyle: AppTextStyles.brButton,
                     ),
@@ -212,6 +227,7 @@ class _TrainerProfileScreenState extends State<TrainerProfileScreen> {
                           color: AppColors.greyDark,
                         ),
                       ),
+
                     )
                   ],
                 ),

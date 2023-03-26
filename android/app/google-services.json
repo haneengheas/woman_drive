@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1011469315302",
+    "project_id": "womandrive-36573",
+    "storage_bucket": "womandrive-36573.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011469315302:android:ae8036ca916ec6c91a5f27",
+        "android_client_info": {
+          "package_name": "com.example.woman_drive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1011469315302-7t42f0ijemk6i5h5omqgsan526l5pe5g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXrqSvVJNtyAWvVckDVYvuIZhIlpbc5Zc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1011469315302-7t42f0ijemk6i5h5omqgsan526l5pe5g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

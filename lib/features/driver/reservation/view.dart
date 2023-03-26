@@ -1,15 +1,22 @@
+// ignore_for_file: avoid_print
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:woman_drive/features/driver/reservation_payment/view.dart';
 import 'package:woman_drive/shared/components/constants.dart';
 import 'package:woman_drive/shared/components/navigator.dart';
 
+import '../../../models/trainer_model.dart';
 import '../../../shared/components/components.dart';
 import '../../../shared/styles/colors.dart';
 import '../../../shared/styles/styles.dart';
+import 'package:intl/intl.dart';
 
 class ReservationScreen extends StatefulWidget {
-  const ReservationScreen({Key? key}) : super(key: key);
+  final TrainerModel model;
+
+  const ReservationScreen({required this.model, Key? key}) : super(key: key);
 
   @override
   State<ReservationScreen> createState() => _ReservationScreenState();
@@ -18,6 +25,9 @@ class ReservationScreen extends StatefulWidget {
 class _ReservationScreenState extends State<ReservationScreen> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime? _selectedDay;
+  String? hour;
+  int? numHours;
+  String? selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +41,15 @@ class _ReservationScreenState extends State<ReservationScreen> {
               onPressed: () => Navigator.pop(context),
               icon: const Icon(
                 Icons.arrow_back_ios_outlined,
-
               )),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 5),
-
           child: Column(
             children: [
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               // كم عدد الساعات
               Box(
                 height: 40,
@@ -54,7 +64,10 @@ class _ReservationScreenState extends State<ReservationScreen> {
                 child: GridView.builder(
                   shrinkWrap: true,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, childAspectRatio: 3,crossAxisSpacing:10,mainAxisSpacing: 10 ),
+                      crossAxisCount: 3,
+                      childAspectRatio: 3,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10),
                   itemCount: hours.length,
                   scrollDirection: Axis.vertical,
                   physics: const NeverScrollableScrollPhysics(),
@@ -67,36 +80,41 @@ class _ReservationScreenState extends State<ReservationScreen> {
                               hours[i]['isSelected'] = false;
                             });
                           }
+
                           setState(() {
                             hours[index]['isSelected'] = true;
                           });
                         }
+                        numHours = hours[index]['clock'];
                       },
                       child: Container(
                         height: 10,
                         width: width(context, 5),
                         alignment: Alignment.center,
-                         margin: const EdgeInsets.symmetric(
-                            horizontal: 10,),
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                        ),
                         decoration: BoxDecoration(
                             color: hours[index]['isSelected']
                                 ? AppColors.pink
                                 : Colors.white,
                             border: Border.all(color: AppColors.black),
                             borderRadius: BorderRadius.circular(20)),
-                        child: Text(hours[index]['clock'],
+                        child: Text("${hours[index]['clock']}",
                             style: AppTextStyles.smTitles),
                       ),
                     );
                   },
                 ),
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               // ما اليوم و الساعة
               Box(
                 height: 40,
                 style: AppTextStyles.name,
-                text:  'كم عدد الساعات تحتاجها علي مدار الاسبوع؟  ',
+                text: 'كم عدد الساعات تحتاجها علي مدار الاسبوع؟  ',
                 color: AppColors.pink,
                 dirction: Alignment.center,
               ),
@@ -105,7 +123,6 @@ class _ReservationScreenState extends State<ReservationScreen> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
                 child: TableCalendar(
-
                   rowHeight: 30,
                   calendarStyle: CalendarStyle(
                       defaultTextStyle: AppTextStyles.smTitles,
@@ -123,9 +140,10 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   onDaySelected: (selectedDay, focusedDay) {
                     setState(() {
                       _selectedDay = selectedDay;
-//
-                      // update `_focusedDay` here as well
                     });
+                    final format = DateFormat('yyyy-MM-dd');
+                    print(format.format(_selectedDay!));
+                    selectedDate = format.format(_selectedDay!);
                   },
                   calendarFormat: _calendarFormat,
                   onFormatChanged: (format) {
@@ -133,24 +151,27 @@ class _ReservationScreenState extends State<ReservationScreen> {
                       _calendarFormat = format;
                     });
                   },
-                  onPageChanged: (focusedDay) {
-                  },
+                  onPageChanged: (focusedDay) {},
                 ),
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
 
               // الساعة
               SizedBox(
-               // height: 130,
+                // height: 130,
                 width: width(context, 1.2),
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, childAspectRatio: 3 ,crossAxisSpacing:10,mainAxisSpacing: 10 ),
+                      crossAxisCount: 3,
+                      childAspectRatio: 3,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10),
                   itemCount: clock.length,
                   scrollDirection: Axis.vertical,
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
@@ -164,8 +185,8 @@ class _ReservationScreenState extends State<ReservationScreen> {
                             clock[index]['isSelected'] = true;
                           });
                         }
+                        hour = clock[index]['clock'];
                       },
-
                       child: Container(
                         //height: 20,
                         //width: width(context, 3.5),
@@ -189,8 +210,24 @@ class _ReservationScreenState extends State<ReservationScreen> {
                 color: AppColors.yellow,
                 height: 35,
                 width: width(context, 3),
-                onPressed: () =>
-                    navigateTo(context, const ReservationPaymentScreen()),
+                onPressed: () {
+                  if (kDebugMode) {
+                    print(numHours);
+                    print(hour);
+                    print(_selectedDay);
+                  }
+                  int total = (numHours! * widget.model.price!);
+                  print(total);
+                  navigateTo(
+                      context,
+                      ReservationPaymentScreen(
+                        model: widget.model,
+                        hour: hour,
+                        numHours: numHours,
+                        selectedDay: selectedDate,
+                        total: total,
+                      ));
+                },
                 text: 'التالي',
                 textStyle: AppTextStyles.brButton,
               ),
@@ -204,27 +241,27 @@ class _ReservationScreenState extends State<ReservationScreen> {
 
 List<Map<String, dynamic>> hours = [
   {
-    'clock': '2',
+    'clock': 2,
     'isSelected': false,
   },
   {
-    'clock': '3',
+    'clock': 3,
     'isSelected': false,
   },
   {
-    'clock': '4',
+    'clock': 4,
     'isSelected': false,
   },
   {
-    'clock': '5',
+    'clock': 5,
     'isSelected': false,
   },
   {
-    'clock': '6',
+    'clock': 6,
     'isSelected': false,
   },
   {
-    'clock': '7',
+    'clock': 7,
     'isSelected': false,
   },
 ];
