@@ -6,6 +6,7 @@ import 'package:meta/meta.dart';
 import 'package:woman_drive/models/comment_model.dart';
 
 import '../../../models/trainer_model.dart';
+import '../../../models/trainer_reservation_model.dart';
 
 part 'admin_state.dart';
 
@@ -16,6 +17,8 @@ class AdminCubit extends Cubit<AdminState> {
 
   List<TrainerModel> trainerData = [];
   List<CommentModel> commentList = [];
+  List<TrainerModel> billsList = [];
+  List<TrainerReservationModel> billsDetailsList = [];
 
   getTrainersData() {
     FirebaseFirestore.instance
@@ -107,13 +110,47 @@ class AdminCubit extends Cubit<AdminState> {
   }
 
   getBills() {
-    FirebaseFirestore.instance.collection('trainer').get().then((value) {
+    FirebaseFirestore.instance
+        .collection('trainer')
+        .where('bills', isGreaterThan: 1)
+        .get()
+        .then((value) {
+      billsList.clear();
       value.docs.forEach((element) {
-        print(element.data());
+        billsList.add(TrainerModel.fromJson(element.data()));
       });
       emit(AdminGetBillsSuccessState());
     }).catchError((error) {
       emit(AdminGetBillsErrorState(error.toString()));
+    });
+  }
+
+  getBillsDetails({required String uidTrainer}) {
+    FirebaseFirestore.instance
+        .collection('reservation')
+        .where('accepted', isEqualTo: 'قادم')
+        .where('uidTrainer', isEqualTo: uidTrainer)
+        .get()
+        .then((value) {
+      billsDetailsList.clear();
+      value.docs.forEach((element) {
+        billsDetailsList.add(TrainerReservationModel.fromJson(element.data()));
+      });
+      emit(AdminGetBillsSuccessState());
+    }).catchError((error) {
+      emit(AdminGetBillsErrorState(error.toString()));
+    });
+  }
+
+  updateBills({required String uidTrainer}) {
+    FirebaseFirestore.instance
+        .collection('trainer')
+        .doc(uidTrainer)
+        .update({'bills': 0}).then((value) {
+      getBills();
+      emit(AdminUpdateBillsSuccessState());
+    }).catchError((error) {
+      emit(AdminUpdateBillsErrorState(error.toString()));
     });
   }
 }

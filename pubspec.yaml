@@ -43,6 +43,7 @@ dependencies:
   image_picker:
   url_launcher:
   intl:
+  multiselect:
 
 
 

@@ -5,7 +5,11 @@ abstract class DriverRegistrationState {}
 
 class DriverRegistrationInitialState extends DriverRegistrationState {}
 
-class DriverRegistrationSuccessState extends DriverRegistrationState {}
+class DriverRegistrationSuccessState extends DriverRegistrationState {
+  late final String uid;
+
+  DriverRegistrationSuccessState(this.uid);
+}
 
 class DriverRegistrationLoadingState extends DriverRegistrationState {}
 

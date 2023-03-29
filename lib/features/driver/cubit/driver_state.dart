@@ -94,3 +94,12 @@ class DriverUpdateSeenErrorState extends DriverState {
 
   DriverUpdateSeenErrorState(this.error);
 }
+class DriverGetTrainerReservationLoadingState extends DriverState {}
+
+class DriverGetTrainerReservationSuccessState extends DriverState {}
+
+class DriverGetTrainerReservationErrorState extends DriverState {
+  final String error;
+
+  DriverGetTrainerReservationErrorState(this.error);
+}

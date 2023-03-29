@@ -2,8 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:multiselect/multiselect.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:woman_drive/features/trainer/trainer_profile/widget/edit_profile.dart';
+import 'package:woman_drive/models/trainer_model.dart';
 import 'package:woman_drive/shared/network/local/constant.dart';
 import 'package:woman_drive/shared/styles/colors.dart';
 import '../../../shared/components/components.dart';
@@ -15,9 +17,9 @@ import '../../registration/login/view.dart';
 import '../cubit/trainer_cubit.dart';
 
 class TrainerInfoScreen extends StatefulWidget {
+  TrainerModel model;
 
-
-  const TrainerInfoScreen({ Key? key}) : super(key: key);
+  TrainerInfoScreen({required this.model, Key? key}) : super(key: key);
 
   @override
   State<TrainerInfoScreen> createState() => _TrainerInfoScreenState();
@@ -26,11 +28,31 @@ class TrainerInfoScreen extends StatefulWidget {
 class _TrainerInfoScreenState extends State<TrainerInfoScreen> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime? _selectedDay;
+  List<String> hours = [
+    '9:00 Am',
+    '10:00 Am',
+    '11:00 Am',
+    '12:00 Pm',
+    '1:00 Pm',
+    '2:00 Pm',
+    '3:00 Pm',
+    '4:00 Pm',
+    '5:00 Pm',
+    '6:00 Pm',
+    '7:00 Pm',
+    '8:00 Pm',
+    '9:00 Pm',
+    '10:00 Pm',
+  ];
+  List<String> selectedHours = [];
 
-  TextEditingController ageDriverController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    var model = TrainerCubit.get(context).model;
+    TextEditingController ageDriverController =
+        TextEditingController(text: model!.age);
+    TextEditingController priceController =
+        TextEditingController(text: ' ${model.price}');
     return BlocConsumer<TrainerCubit, TrainerState>(listener: (context, state) {
       if (state is TrainerSetDataSuccessState) {
         Navigator.pop(context);
@@ -41,10 +63,7 @@ class _TrainerInfoScreenState extends State<TrainerInfoScreen> {
         }
       }
     }, builder: (context, state) {
-      var model = TrainerCubit
-          .get(context)
-          .model;
-
+      var model = TrainerCubit.get(context).model;
 
       return Scaffold(
         appBar: AppBar(
@@ -59,12 +78,11 @@ class _TrainerInfoScreenState extends State<TrainerInfoScreen> {
               )),
           actions: [
             IconButton(
-                onPressed: () async{
+                onPressed: () async {
                   uId = '';
                   print(uId);
                   navigateAndReplace(context, const LoginScreen());
-
-            },
+                },
                 icon: const Icon(
                   Icons.logout,
                   size: 30,
@@ -79,7 +97,7 @@ class _TrainerInfoScreenState extends State<TrainerInfoScreen> {
               // صورة الروفايل + الاسم
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -135,8 +153,7 @@ class _TrainerInfoScreenState extends State<TrainerInfoScreen> {
               TextFieldTemplate(
                 hintText: 'رقم اللوحة ',
                 icon: Icons.credit_card_outlined,
-                controller:
-                TextEditingController(text: model.licenseNumber),
+                controller: TextEditingController(text: model.licenseNumber),
                 readOnly: true,
               ),
               Box(
@@ -166,7 +183,7 @@ class _TrainerInfoScreenState extends State<TrainerInfoScreen> {
               // التقويم
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
+                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
                 child: TableCalendar(
                   rowHeight: 30,
                   calendarStyle: CalendarStyle(
@@ -203,50 +220,98 @@ class _TrainerInfoScreenState extends State<TrainerInfoScreen> {
               ),
 
               // الساعة
-              SizedBox(
-                // height: 130,
-                width: width(context, 1.2),
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      childAspectRatio: 3,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10),
-                  itemCount: clock.length,
-                  scrollDirection: Axis.vertical,
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        for (int i = 0; i < clock.length; i++) {
-                          if (clock[i]['isSelected'] == true) {
-                            setState(() {
-                              clock[i]['isSelected'] = false;
-                            });
-                          }
-                          setState(() {
-                            clock[index]['isSelected'] = true;
-                          });
-                        }
-                      },
-                      child: Container(
-                        //height: 20,
-                        //width: width(context, 3.5),
-                        alignment: Alignment.center,
-                        // margin: const EdgeInsets.symmetric(
-                        //     horizontal: 10, vertical: 10),
-                        decoration: BoxDecoration(
-                            color: clock[index]['isSelected']
-                                ? AppColors.pink
-                                : Colors.white,
-                            border: Border.all(color: AppColors.black),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Text(clock[index]['clock'],
-                            style: AppTextStyles.smTitles),
-                      ),
-                    );
+              // SizedBox(
+              //   // height: 130,
+              //   width: width(context, 1.2),
+              //   child: GridView.builder(
+              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              //         crossAxisCount: 3,
+              //         childAspectRatio: 3,
+              //         crossAxisSpacing: 10,
+              //         mainAxisSpacing: 10),
+              //     itemCount: clock.length,
+              //     scrollDirection: Axis.vertical,
+              //     physics: const NeverScrollableScrollPhysics(),
+              //     shrinkWrap: true,
+              //     itemBuilder: (context, index) {
+              //       return InkWell(
+              //         onTap: () {
+              //           // for (int i = 0; i < clock.length; i++) {
+              //           //   if (clock[i]['isSelected'] == true) {
+              //           //     setState(() {
+              //           //       clock[i]['isSelected'] = false;
+              //           //     });
+              //           //   }
+              //           setState(() {
+              //             clock[index]['isSelected'] = true;
+              //           });
+              //         },
+              //         child: Container(
+              //           //height: 20,
+              //           //width: width(context, 3.5),
+              //           alignment: Alignment.center,
+              //           // margin: const EdgeInsets.symmetric(
+              //           //     horizontal: 10, vertical: 10),
+              //           decoration: BoxDecoration(
+              //               color: clock[index]['isSelected']
+              //                   ? AppColors.pink
+              //                   : Colors.white,
+              //               border: Border.all(color: AppColors.black),
+              //               borderRadius: BorderRadius.circular(20)),
+              //           child: Text(clock[index]['clock'],
+              //               style: AppTextStyles.smTitles),
+              //         ),
+              //       );
+              //     },
+              //   ),
+              // ),
+              Box(
+                height: 40,
+                style: AppTextStyles.name,
+                text: 'الساعات المتاحة',
+                color: AppColors.pink,
+                dirction: Alignment.center,
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                child: DropDownMultiSelect(
+                  options: hours,
+                  selectedValues: selectedHours,
+                  validator: (String? value) {
+                    if (value!.isEmpty) {
+                      return 'برجاء ادخال الساعات المتاحة بالنسبة لك';
+                    }
+                    return '';
                   },
+                  decoration: const InputDecoration(
+                      enabled: true,
+                      fillColor: AppColors.pink,
+                      filled: true,
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.pink, width: 1),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.pink, width: 1),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      disabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: AppColors.pink, width: 1),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ))),
+                  onChanged: (value) {
+                    print('selected hour $value');
+                    setState(() {
+                      selectedHours = value;
+                    });
+                    print('you have selected $selectedHours this hour.');
+                  },
+                  hint: Text('اختر الساعات المتاحة بالنسبة لك '),
                 ),
               ),
               const SizedBox(
@@ -272,8 +337,12 @@ class _TrainerInfoScreenState extends State<TrainerInfoScreen> {
                     height: 40,
                     onPressed: () {
                       TrainerCubit.get(context).addTrainerData(
-                          ageDriver: ageDriverController.text,
-                          price: int.parse(priceController.text));
+                        ageDriver: ageDriverController.text,
+                        price: int.parse(
+                          priceController.text,
+                        ),
+                        hours: selectedHours,
+                      );
                       TrainerCubit.get(context).getTrainerData();
                     },
                     text: 'تأكيد',
@@ -289,29 +358,29 @@ class _TrainerInfoScreenState extends State<TrainerInfoScreen> {
   }
 }
 
-List<Map<String, dynamic>> clock = [
-  {
-    'clock': '9:00 Am',
-    'isSelected': false,
-  },
-  {
-    'clock': '12:00 Pm',
-    'isSelected': false,
-  },
-  {
-    'clock': '3:00 Pm',
-    'isSelected': false,
-  },
-  {
-    'clock': '6:00 Pm ',
-    'isSelected': false,
-  },
-  {
-    'clock': '8:00 Pm',
-    'isSelected': false,
-  },
-  {
-    'clock': '8:30 Pm',
-    'isSelected': false,
-  },
-];
+// List<Map<String, dynamic>> clock = [
+//   {
+//     'clock': '9:00 Am',
+//     'isSelected': false,
+//   },
+//   {
+//     'clock': '12:00 Pm',
+//     'isSelected': false,
+//   },
+//   {
+//     'clock': '3:00 Pm',
+//     'isSelected': false,
+//   },
+//   {
+//     'clock': '6:00 Pm ',
+//     'isSelected': false,
+//   },
+//   {
+//     'clock': '8:00 Pm',
+//     'isSelected': false,
+//   },
+//   {
+//     'clock': '8:30 Pm',
+//     'isSelected': false,
+//   },
+// ];

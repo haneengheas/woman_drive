@@ -29,10 +29,10 @@ class _TrainerHomeScreenState extends State<TrainerHomeScreen> {
           print('hello');
           print(uId);
         }
-
       }
       if (state is TrainerGetDataErrorState) {
         if (kDebugMode) {
+          print('error');
           print(state.error.toString());
         }
       }
@@ -65,7 +65,7 @@ class _TrainerHomeScreenState extends State<TrainerHomeScreen> {
                       ),
                       ButtonTemplate(
                         color: AppColors.yellow,
-                        onPressed: ()  {
+                        onPressed: () {
                           TrainerCubit.get(context).getReservation();
                           navigateTo(context, const TrainerReservationScreen());
                         },
@@ -76,7 +76,8 @@ class _TrainerHomeScreenState extends State<TrainerHomeScreen> {
                         color: AppColors.pink,
                         onPressed: () => navigateTo(
                             context,
-                            const TrainerInfoScreen(
+                            TrainerInfoScreen(
+                              model: TrainerCubit.get(context).model!,
                             )),
                         minwidth: width(context, 1.7),
                         text1: 'حسابي',

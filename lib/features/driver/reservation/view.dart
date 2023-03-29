@@ -28,6 +28,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
   String? hour;
   int? numHours;
   String? selectedDate;
+  @override
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +53,9 @@ class _ReservationScreenState extends State<ReservationScreen> {
               ),
               // كم عدد الساعات
               Box(
-                height: 40,
+                // height: 60,
                 style: AppTextStyles.name,
+
                 text: 'كم عدد الساعات تحتاجها علي مدار الاسبوع؟  ',
                 color: AppColors.pink,
                 dirction: Alignment.center,
@@ -112,7 +114,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
               ),
               // ما اليوم و الساعة
               Box(
-                height: 40,
+                // height: 40,
                 style: AppTextStyles.name,
                 text: 'كم عدد الساعات تحتاجها علي مدار الاسبوع؟  ',
                 color: AppColors.pink,
@@ -175,6 +177,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
+                        print(widget.model.hours!.length);
                         for (int i = 0; i < clock.length; i++) {
                           if (clock[i]['isSelected'] == true) {
                             setState(() {

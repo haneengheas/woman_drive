@@ -48,11 +48,11 @@ class _LoginScreenState extends State<LoginScreen> {
             );
             CacheHelper.saveData(
               key: 'request',
-              value: state.uid,
+              value: state.request,
             );
             CacheHelper.saveData(key: 'type', value: state.type).then((value) {
               uId = CacheHelper.getData(key: 'uid');
-              uId = CacheHelper.getData(key: 'request');
+              request = CacheHelper.getData(key: 'request');
               print('Login successfully');
               print(uId);
               if (state.type == 'driver' && state.request == 'accepted') {

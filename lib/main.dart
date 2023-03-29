@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:woman_drive/features/admin/cubit/admin_cubit.dart';
+import 'package:woman_drive/features/admin/home/view.dart';
 import 'package:woman_drive/features/driver/cubit/driver_cubit.dart';
 import 'package:woman_drive/features/driver/home/view.dart';
 import 'package:woman_drive/features/splash/view.dart';
@@ -29,7 +30,7 @@ Future<void> main() async {
   } else if (uId != null && type == 'driver' && request == 'accepted') {
     widget = const DriverHomeScreen();
   } else if (uId != null && type == 'admin' && request == 'accepted') {
-    widget = const DriverHomeScreen();
+    widget = const AdminHomeScreen();
   } else {
     widget = const SplashScreen();
   }
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (BuildContext context) => AdminCubit()
                 ..getTrainersData()
-                ..getComment()),
+                ..getComment()..getBills()),
           BlocProvider(
               create: (BuildContext context) => TrainerCubit()
                 ..getTrainerData()
@@ -69,7 +70,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           theme: lightTheme,
           debugShowCheckedModeBanner: false,
-          home: Scaffold(
+          home:  Scaffold(
             body: startWidget!,
           ),
         ));

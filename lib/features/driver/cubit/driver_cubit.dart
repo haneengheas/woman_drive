@@ -7,6 +7,7 @@ import 'package:woman_drive/models/comment_model.dart';
 import 'package:woman_drive/models/driver_model.dart';
 import 'package:woman_drive/models/driver_reservation_model.dart';
 import 'package:woman_drive/models/trainer_model.dart';
+import '../../../models/trainer_reservation_model.dart';
 import '../../../shared/network/local/constant.dart';
 
 part 'driver_state.dart';
@@ -18,6 +19,7 @@ class DriverCubit extends Cubit<DriverState> {
   DriverModel? model;
   List<TrainerModel> trainersData = [];
   List<DriverReservationModel> reservationList = [];
+  List<TrainerReservationModel> trainerReservationList = [];
   List<CommentModel> commentList = [];
 
   getDriverData() {
@@ -94,7 +96,7 @@ class DriverCubit extends Cubit<DriverState> {
       'numHours': numHours,
       'trainerName': trainerName,
       'uidTrainer': uidTrainer,
-      'rate': 0,
+      'rate': 1.5,
       'comment': 'comment',
     }).then((value) {
       getReservation();
@@ -202,6 +204,23 @@ class DriverCubit extends Cubit<DriverState> {
       emit(DriverUpdateSeenSuccessState());
     }).catchError((error) {
       emit(DriverUpdateSeenErrorState(error.toString()));
+    });
+  }
+
+  getTrainerReservationComment({required String uidTrainer}) {
+    FirebaseFirestore.instance
+        .collection('reservation')
+        .where('uidTrainer', isEqualTo: uidTrainer)
+        .get()
+        .then((value) {
+      trainerReservationList.clear();
+      value.docs.forEach((element) {
+        trainerReservationList
+            .add(TrainerReservationModel.fromJson(element.data()));
+      });
+      emit(DriverGetTrainerReservationSuccessState());
+    }).catchError((error) {
+      emit(DriverGetTrainerReservationErrorState(error.toString()));
     });
   }
 }

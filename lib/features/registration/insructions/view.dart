@@ -86,7 +86,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
                                       ),
                                     ),
                                   )).show().then((value){
-                                navigateAndReplace(context, const LoginScreen());
+                                    navigateAndReplace(context, const LoginScreen());
                               });
 
                             }

@@ -38,10 +38,13 @@ class TrainerCubit extends Cubit<TrainerState> {
   addTrainerData({
     required String ageDriver,
     required int price,
+    required List hours,
   }) {
     FirebaseFirestore.instance.collection('trainer').doc(uId).set({
       'ageDriver': ageDriver,
       'price': price,
+       'hours' : hours,
+
     }, SetOptions(merge: true)).then((value) {
       emit(TrainerSetDataSuccessState());
     }).catchError((error) {});
@@ -100,11 +103,19 @@ class TrainerCubit extends Cubit<TrainerState> {
     });
   }
 
-  acceptReservation({required String uidDoc}) {
+  acceptReservation({required String uidDoc, required int bills}) {
     FirebaseFirestore.instance
         .collection('reservation')
         .doc(uidDoc)
         .update({'accepted': 'قادم'}).then((value) {
+      FirebaseFirestore.instance
+          .collection('trainer')
+          .doc(uId)
+          .update({'bills': bills}).then((value) {
+        emit(TrainerUpdateBillsSuccessState());
+      }).catchError((error) {
+        emit(TrainerUpdateBillsErrorState(error.toString()));
+      });
       getReservation();
       emit(TrainerAcceptReservationSuccessState());
     }).catchError((error) {

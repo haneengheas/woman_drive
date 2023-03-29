@@ -5,6 +5,8 @@ import 'package:woman_drive/features/registration/sign_up/driver/cubit/driver_re
 import 'package:woman_drive/shared/components/navigator.dart';
 import '../../../../shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
+import '../../../../shared/network/local/constant.dart';
+import '../../../../shared/network/local/shared_preferences.dart';
 import '../../../../shared/styles/colors.dart';
 
 class DriverRegisterScreen extends StatefulWidget {
@@ -30,6 +32,11 @@ class _DriverScreenState extends State<DriverRegisterScreen> {
       child: BlocConsumer<DriverRegistrationCubit, DriverRegistrationState>(
           listener: (context, state) {
         if (state is DriverRegistrationSuccessState) {
+          CacheHelper.saveData(
+            key: 'uid',
+            value: state.uid,
+          );
+          uId = CacheHelper.getData(key: 'uid');
           navigateTo(context, const DriverHomeScreen());
         }
         if (state is DriverRegistrationErrorState) {

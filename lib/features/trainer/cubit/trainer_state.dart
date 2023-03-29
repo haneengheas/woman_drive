@@ -60,3 +60,13 @@ class TrainerRefusedReservationErrorState extends TrainerState {
 
   TrainerRefusedReservationErrorState(this.error);
 }
+
+class TrainerUpdateBillsLoadingState extends TrainerState {}
+
+class TrainerUpdateBillsSuccessState extends TrainerState {}
+
+class TrainerUpdateBillsErrorState extends TrainerState {
+  final String error;
+
+  TrainerUpdateBillsErrorState(this.error);
+}

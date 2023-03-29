@@ -27,29 +27,32 @@ class DriverRegistrationCubit extends Cubit<DriverRegistrationState> {
         print(value.user!.email);
         print(value.user!.uid);
       }
-      FirebaseFirestore.instance.collection('users').doc(value.user!.uid).set(
-          {'type' : 'driver', 'request' : 'accepted'});
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(value.user!.uid)
+          .set({'type': 'driver', 'request': 'accepted'});
 
-      driverCreateAccount(name: name,
+      driverCreateAccount(
+          name: name,
           email: email,
           password: password,
           age: age,
           phone: phone,
           address: address,
           uid: value.user!.uid);
-
     }).catchError((error) {
       emit(DriverRegistrationErrorState(error.toString()));
     });
   }
 
-  driverCreateAccount({required String name,
-    required String email,
-    required String password,
-    required String age,
-    required String phone,
-    required String address,
-    required String uid}) {
+  driverCreateAccount(
+      {required String name,
+      required String email,
+      required String password,
+      required String age,
+      required String phone,
+      required String address,
+      required String uid}) {
     DriverModel model = DriverModel(
       phone: phone,
       name: name,
@@ -63,12 +66,9 @@ class DriverRegistrationCubit extends Cubit<DriverRegistrationState> {
         .doc(uid)
         .set(model.toMap())
         .then((value) {
-      emit(DriverRegistrationSuccessState());
+      emit(DriverRegistrationSuccessState(uid));
     }).catchError((error) {
       emit(DriverRegistrationErrorState(error.toString()));
-
     });
   }
-
 }
-

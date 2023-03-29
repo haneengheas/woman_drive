@@ -7,6 +7,7 @@ import 'package:woman_drive/features/registration/login/view.dart';
 import 'package:woman_drive/shared/components/components.dart';
 import 'package:woman_drive/shared/components/constants.dart';
 import 'package:woman_drive/shared/components/navigator.dart';
+import 'package:woman_drive/shared/network/local/shared_preferences.dart';
 import 'package:woman_drive/shared/styles/colors.dart';
 
 import '../../../shared/styles/images.dart';
@@ -35,6 +36,7 @@ class _DriverProfileState extends State<DriverProfile> {
                 leading: IconButton(
                     onPressed: () {
                       FirebaseAuth.instance.signOut();
+                      CacheHelper.removeToken(key: 'uid');
                       navigateAndReplace(context, const LoginScreen());
                     },
                     icon: const Icon(

@@ -61,3 +61,22 @@ class AdminGetBillsErrorState extends AdminState {
 
   AdminGetBillsErrorState(this.error);
 }
+class AdminGetBillsDetailsSuccessState extends AdminState {}
+
+class AdminGetBillsDetailsLoadingState extends AdminState {}
+
+class AdminGetBillsDetailsErrorState extends AdminState {
+  final String error;
+
+  AdminGetBillsDetailsErrorState(this.error);
+}
+
+class AdminUpdateBillsSuccessState extends AdminState {}
+
+class AdminUpdateBillsLoadingState extends AdminState {}
+
+class AdminUpdateBillsErrorState extends AdminState {
+  final String error;
+
+  AdminUpdateBillsErrorState(this.error);
+}

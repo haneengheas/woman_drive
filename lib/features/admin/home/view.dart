@@ -66,14 +66,16 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
               ),
               ButtonTemplate(
                 color: AppColors.yellow,
-                onPressed: () => navigateTo(context, const BillsScreen()),
+                onPressed: () {
+                  AdminCubit.get(context).getBills();
+                  navigateTo(context, const BillsScreen());
+                },
                 minwidth: width(context, 1.7),
                 text1: ' فواتير مدربي القيادة',
               ),
               ButtonTemplate(
                 color: AppColors.pink,
                 onPressed: () {
-                  AdminCubit.get(context).getBills();
                   navigateTo(context, const NewTrainer());
                 },
                 minwidth: width(context, 1.7),

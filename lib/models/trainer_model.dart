@@ -12,7 +12,8 @@ class TrainerModel {
   String? request;
   String? ageDriver;
   int? price;
-  double? bills;
+  int? bills;
+  List? hours;
 
   TrainerModel({
     this.email,
@@ -29,6 +30,7 @@ class TrainerModel {
     this.price,
     this.ageDriver,
     this.bills,
+    this.hours,
   });
 
   TrainerModel.fromJson(Map<String, dynamic> json) {
@@ -46,6 +48,7 @@ class TrainerModel {
     price = json['price'];
     ageDriver = json['ageDriver'];
     bills = json['bills'];
+    hours = json['hours'];
   }
 
   Map<String, dynamic> toMap() {
@@ -64,6 +67,7 @@ class TrainerModel {
       'ageDriver': ageDriver,
       'price': price,
       'bills': bills,
+      'hours': hours,
     };
   }
 }

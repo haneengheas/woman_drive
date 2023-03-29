@@ -58,7 +58,7 @@ class ReservationCard extends StatelessWidget {
                     '${model.dateOfDay}',
                     style: AppTextStyles.w400b,
                   ),
-                  model.rate == 0
+                  model.accepted != 'منتهي'
                       ? const SizedBox()
                       : RatingBar.builder(
                           textDirection: TextDirection.rtl,

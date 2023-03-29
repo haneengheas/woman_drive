@@ -5,6 +5,7 @@ class TrainerReservationModel {
   String? accepted;
   String? dateOfDay;
   String? dayDate;
+  String? comment;
   String? hours;
   int? numHours;
   int? total;
@@ -20,6 +21,7 @@ class TrainerReservationModel {
     this.dateOfDay,
     this.dayDate,
     this.hours,
+    this.comment,
     this.numHours,
     this.uidDoc,
     this.rate,
@@ -37,6 +39,7 @@ class TrainerReservationModel {
     numHours = json['numHours'];
     uidDoc = json['uidDoc'];
     rate = json['rate'];
+    comment = json['comment'];
 
   }
 
@@ -52,6 +55,7 @@ class TrainerReservationModel {
       'numHours': numHours,
       'uidDoc': uidDoc,
       'rate': rate,
+      'comment': comment,
 
     };
   }

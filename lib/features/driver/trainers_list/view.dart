@@ -22,9 +22,14 @@ class _TrainerListScreenState extends State<TrainerListScreen> {
     return BlocConsumer<DriverCubit, DriverState>(
         listener: (context, state) {},
         builder: (context, state) {
-          var model = DriverCubit.get(context).model;
+          var model = DriverCubit
+              .get(context)
+              .model;
           return ConditionalBuilder(
-              condition: DriverCubit.get(context).trainersData.isNotEmpty,
+              condition: DriverCubit
+                  .get(context)
+                  .trainersData
+                  .isNotEmpty,
               builder: (context) {
                 return SafeArea(
                   child: Scaffold(
@@ -43,21 +48,31 @@ class _TrainerListScreenState extends State<TrainerListScreen> {
                       child: GridView.builder(
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
-                        itemCount: DriverCubit.get(context).trainersData.length,
+                        itemCount: DriverCubit
+                            .get(context)
+                            .trainersData
+                            .length,
                         gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 5),
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 5),
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
-                            onTap: () => navigateTo(
-                                context,
-                                TrainerProfileScreen(
-                                  model: DriverCubit.get(context)
-                                      .trainersData[index],
-                                  image: woman1
-                                )),
+                            onTap: () {
+                              DriverCubit.get(context)
+                                  .getTrainerReservationComment(
+                                  uidTrainer: DriverCubit
+                                      .get(context)
+                                      .trainersData[index].uid!);
+                              navigateTo(
+                                  context,
+                                  TrainerProfileScreen(
+                                      model: DriverCubit
+                                          .get(context)
+                                          .trainersData[index],
+                                      image: woman1));
+                            },
                             child: Container(
                               height: 60,
                               width: width(context, 2.5),
@@ -85,7 +100,9 @@ class _TrainerListScreenState extends State<TrainerListScreen> {
                                       height: 20,
                                     ),
                                     Text(
-                                      '${DriverCubit.get(context).trainersData[index].name}',
+                                      '${DriverCubit
+                                          .get(context)
+                                          .trainersData[index].name}',
                                       style: AppTextStyles.name.apply(
                                           color: index.isEven
                                               ? AppColors.green

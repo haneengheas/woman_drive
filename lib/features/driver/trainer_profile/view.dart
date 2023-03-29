@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:woman_drive/features/driver/cubit/driver_cubit.dart';
 import 'package:woman_drive/models/trainer_model.dart';
 import 'package:woman_drive/shared/components/components.dart';
 import 'package:woman_drive/shared/components/constants.dart';
@@ -30,6 +31,7 @@ class _TrainerProfileScreenState extends State<TrainerProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var trainerModel = DriverCubit.get(context).trainerReservationList;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -198,7 +200,7 @@ class _TrainerProfileScreenState extends State<TrainerProfileScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: RatingBar.builder(
                         textDirection: TextDirection.rtl,
-                        initialRating: 3,
+                        initialRating: trainerModel[0].rate!,
                         minRating: 1,
                         itemSize: 30,
                         direction: Axis.horizontal,
@@ -227,7 +229,6 @@ class _TrainerProfileScreenState extends State<TrainerProfileScreen> {
                           color: AppColors.greyDark,
                         ),
                       ),
-
                     )
                   ],
                 ),
@@ -244,56 +245,58 @@ class _TrainerProfileScreenState extends State<TrainerProfileScreen> {
                   style: AppTextStyles.name,
                 ),
                 // التعليقات
-                SizedBox(
-                  height: height(context, 3),
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: comment.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
-                          // height: 100,
-                          width: width(context, 1.2),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border:
-                                Border.all(color: AppColors.red, width: 1.5),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            textDirection: TextDirection.rtl,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                textDirection: TextDirection.rtl,
-                                children: [
-                                  Text(
-                                    'اسم المستخدم  : ${comment[index]['name']} ',
-                                    style: AppTextStyles.w800,
-                                  ),
-                                  Text(
-                                    comment[index]['data'],
-                                    style: AppTextStyles.w600,
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                comment[index]['comment'],
-                                textDirection: TextDirection.rtl,
-                                style: AppTextStyles.w400,
-                              )
-                            ],
-                          ),
-                        );
-                      }),
-                )
+                trainerModel.isEmpty
+                    ? const SizedBox()
+                    : SizedBox(
+                        height: height(context, 3),
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: trainerModel.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                // height: 100,
+                                width: width(context, 1.2),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(
+                                      color: AppColors.red, width: 1.5),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  textDirection: TextDirection.rtl,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      textDirection: TextDirection.rtl,
+                                      children: [
+                                        Text(
+                                          'اسم المستخدم  : ${trainerModel[index].driverName} ',
+                                          style: AppTextStyles.w800,
+                                        ),
+                                        Text(
+                                          ' ${trainerModel[index].dayDate}',
+                                          style: AppTextStyles.w600,
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      '${trainerModel[index].comment}',
+                                      textDirection: TextDirection.rtl,
+                                      style: AppTextStyles.w400,
+                                    )
+                                  ],
+                                ),
+                              );
+                            }),
+                      )
               ],
             ),
           ),

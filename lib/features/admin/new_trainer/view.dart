@@ -93,8 +93,7 @@ class _NewTrainerState extends State<NewTrainer> {
                         Icons.arrow_back_ios_outlined,
                       )),
                 ),
-                body: AdminCubit.get(context).trainerData.length ==
-                    1 ? const SizedBox() : const LinearProgressIndicator(),
+                body: AdminCubit.get(context).trainerData.isEmpty ? const SizedBox() : const LinearProgressIndicator(),
               );
             });
       },
